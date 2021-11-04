@@ -33,7 +33,7 @@ amostras = [
     (0.2012, 0.2611, 5.4631, 1.0000)
 ]
 
-pesos = [random.randint(0, 100) / 100, random.randint(0, 100) / 100, random.randint(0, 100) / 100]
+pesos = [random.randint(0, 100) / 100, random.randint(0, 100) / 100, random.randint(0, 100) / 100, random.randint(0, 100) / 100]
 pesosCalculados = []
 
 n = 0.01
@@ -58,26 +58,26 @@ def sinal(u):
 
 def treinador():
     global pesos
+    print(pesos)
 
     for epoca in range(5):
         for x in amostras:
-            u = (x[0] * pesos[0]) + (x[1] * pesos[1]) + (x[2] * pesos[2])
+            u = (x[0] * pesos[0]) + (x[1] * pesos[1]) + (x[2] * pesos[2]) + pesos[3]
             y = sinal(u)
 
             if y != x[3]:
                 for j in range(3):
                     pesos[j] = pesos[j] + n * (x[3] - y) * x[j]
+                pesos[3] = pesos[3] + n * (x[3] - y)
 
         pesosCalculados.append(pesos.copy())
-
-    print(pesosCalculados)
 
 
 def operacao():
     for peso in pesosCalculados:
         print(peso)
         for x in amostrasAVerificar:
-            u = (x[0] * peso[0]) + (x[1] * peso[1]) + (x[2] * peso[2])
+            u = (x[0] * peso[0]) + (x[1] * peso[1]) + (x[2] * peso[2]) + peso[3]
             y = sinal(u)
             if y == -1:
                 print('classe A')
